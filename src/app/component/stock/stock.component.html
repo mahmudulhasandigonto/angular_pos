@@ -1,0 +1,141 @@
+<div class="contentheader mt-2 ml-4 mr-4">
+    <h3 class="text-center"><i class="fa fa-th" aria-hidden="true" style="margin-right: 5px;"></i> Stocks Item</h3>
+</div>
+<!-- <ul class="breadcrumb ml-4 mr-4">
+    <li><a href="#">Dashboard </a></li> /
+    <li class="active"> Stocks</li>
+</ul> -->
+
+<div style="margin-top: -18px; margin-bottom: 21px; margin-left: 20px; margin-right: 20px;">
+    <!-- <a routerLink="../" href="#"><button class="btn btn-secondary btn-large" style="float: left;"><i class="fa fa-arrow-circle-left"
+                aria-hidden="true"></i> Back</button></a> -->
+
+
+
+    <div style="text-align:center;">
+        Total Number of Raw Foods: <font color="green" style="font:bold 22px 'Aleo';">[{{this.allStock}}]</font>
+    </div>
+
+    <div style="text-align:center;">
+        <font style="color:rgb(255, 95, 66);; font:bold 22px 'Aleo';">[{{this.bellowStock}}]</font> Foods are below QTY of {{this.allStock}}
+    </div>
+</div>
+<a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><button type="submit" class="btn btn-info"
+        style="float:right; width:186px; margin-right: 20px; height:35px;"><i class="fa fa-plus-circle"
+            aria-hidden="true"></i> Add Stocks</button></a>
+<!-- table value start -->
+<div class="card" style="margin-top: 4.5rem!important; margin-left: 20px; margin-right: 20px;">
+
+    <table class="table table-bordered table-striped table-responsive mt-2 ml-3 bg-white" id="resultTable" data-responsive="table" style="text-align: left;">
+        <thead>
+            <tr>
+                <th> Raw Code </th>
+                <th> Raw Name </th>
+                <th> Supplier </th>
+                <th> Date Received </th>
+                <th> Expiry Date </th>
+                <th> Price per/(kg/ltr) </th>
+                <th> QTY </th>
+                <th> Qty Left </th>
+                <th> Total </th>
+                <th> Action </th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            <tr *ngFor="let item of stockInfo">
+
+                <td>{{item.rawMaterialCode}}</td>
+                <td> {{item.rawMaterialName}}</td>
+                <td>{{item.suppliers.supplierName}}</td>
+                <td>{{item.materialReceiveDate}}</td>
+                <td>{{item.expiryDate}}</td>
+                <td>{{item.materialPrice}}</td>
+
+
+                <td>{{item.quantity}}</td>
+                <td>0</td>
+
+                <td>{{item.materialPrice * item.quantity}}</td>
+                <td style="cursor: pointer;">
+                    <button title="Click to edit the Stocks" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btn btn-danger" title="Click to Delete the Stocks" style="margin-left: 5px;"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel"><i class="fa fa-plus-circle"
+                        aria-hidden="true"></i>
+                    Add Stocks</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formGroup">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Raw Food Code: </label>
+                            <input type="text" formControlName="foodCode" class="form-control"
+                                placeholder="Enter Food Code">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Raw Food Name:&nbsp; </label>
+                            <textarea cols="3" rows="2" formControlName="foodName" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Date Arrival: </label>
+                            <input type="date" formControlName="date1" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Expiry Date: </label>
+                            <input type="date" formControlName="date2" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Price Per(kg/ltr) : </label>
+                            <input type="text" formControlName="price" class="form-control"
+                                placeholder="Enter Food Original Price">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Supplier</label>
+                            <select class="form-control" #id formControlName="supplier_id"
+                                (change)="onChangeServer($event, id.value)">
+                                <option value="">Select Supplier Name</option>
+                                <option *ngFor="let empId of supplierIds" [value]="empId[0]">{{empId[1]}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Quantity</label>
+                            <input type="text" formControlName="qty" class="form-control" placeholder="Enter Quantity">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addStock()">Add Stock</button>
+            </div>
+        </div>
+    </div>
+</div>

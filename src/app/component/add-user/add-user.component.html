@@ -1,0 +1,132 @@
+<div class="contentheader mt-2 ml-4 mr-4">
+    <h3 class="text-center"><i class="fa fa-users" aria-hidden="true" style="margin-right: 5px;"></i> User List</h3>
+</div>
+<!-- <ul class="breadcrumb ml-4 mr-4">
+    <li><a href="#">Dashboard </a></li> /
+    <li class="active"> Users</li>
+</ul> -->
+
+<div style="margin-top: -19px; margin-bottom: 21px; margin-left: 20px; margin-right: 20px;">
+    <!-- <a routerLink="../dashboard" href="#"><button class="btn btn-secondary btn-large" style="float: left;"><i class="fa fa-arrow-circle-left"
+                aria-hidden="true"></i> Back</button></a> -->
+
+
+
+    <div style="text-align:center;">
+        Total Number of Users: <font color="green" style="font:bold 22px 'Aleo';"> {{this.allUser}}</font>
+    </div>
+</div>
+<a rel="facebox" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"><button type="submit"
+        class="btn btn-info" style="float:right; width:186px; margin-right: 20px; height:35px;"><i
+             aria-hidden="true"></i> Add User</button></a>
+
+
+<div class="card" style="margin-top: 4.5rem!important;">
+    <table class="table table-bordered table-striped table-responsive mt-2 bg-white">
+        <thead>
+            <tr>
+                <th scope="col">SL No</th>
+                <th scope="col">User Name</th>
+                <th scope="col">Email</th>
+
+                <th scope="col">Name</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Role</th>
+                <th scope="col">Access Approved</th>
+                <th scope="col"> Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of userList; let i = index">
+                <td>{{i+1}}</td>
+
+                <td>{{row.username}}</td>
+                <td>{{row.email}}</td>
+                <td>{{row.name}}</td>
+                <td>{{row.phone}}</td>
+                <td>{{row.role}}</td>
+                <td>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input ml-2" [(ngModel)]="row.status" name="status_{{row.id}}"
+                            type="checkbox" (change)="checkValue($event,row.id)">
+
+
+                    </div>
+
+                    <!-- <div class="check">
+                    <label>
+                        <input [checked]="checked" [(ngModel)]="row.status" name="status_{{row.id}}" type="checkbox" (change)="checkValue($event,row.id)">
+                        <span>Active</span>
+                    </label>
+                </div> -->
+                </td>
+
+                <td style="cursor: pointer;">
+                    <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button class="btn btn-danger" style="margin-left: 5px;"><i class="fa-solid fa-trash"></i></button>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel"><i class="fa fa-plus-circle"
+                        aria-hidden="true"></i> Add Supplier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="formGroup">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="labels fw-bold">User Name</label><input type="text" class="form-control"
+                                placeholder="Enter User Name" value="" formControlName="username" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="labels fw-bold">Employee Name</label><input type="text" class="form-control"
+                                placeholder="Enter Employee Name" value="" formControlName="name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="labels fw-bold">Email Address</label><input type="text" class="form-control"
+                                placeholder="Enter Email Address" value="" formControlName="email" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="labels fw-bold">Phone</label><input type="text" class="form-control"
+                                placeholder="Enter Phone" value="" formControlName="phone" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="fw-bold">Select Role: </label>
+                            <select #id formControlName="role"
+                                class="form-control">
+                                <option value="">Select Access Privilege</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">Cashier</option>
+                                <option value="user">Editor</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="createUser()">Add Supplier</button>
+            </div>
+        </div>
+    </div>
+</div>

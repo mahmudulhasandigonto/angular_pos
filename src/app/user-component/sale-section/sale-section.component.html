@@ -1,0 +1,157 @@
+<div class="contentheader mt-2 ml-4 mr-4">
+    <h3 class="text-center"><i class="fa-regular fa-money-bill-1" style="margin-left: 5px;"></i><span
+            style="color: rgb(0, 128, 0); font-weight: bold;"> {{this.saleAmount}}</span></h3>
+</div>
+<!-- <ul class="breadcrumb ml-4 mr-4">
+    <li><a href="#">Dashboard </a></li> /
+    <li class="active"> Sales</li>
+</ul> -->
+
+<div style="margin-top: -19px; margin-bottom: 21px; margin-left: 20px; margin-right: 20px;">
+    <!-- <a routerLink="../" href="#"><button class="btn btn-secondary btn-large" style="float: left;"><i class="fa fa-arrow-circle-left"
+                aria-hidden="true"></i> Back</button></a> -->
+    <br>
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <form [formGroup]="formGroup" class="form-inline">
+                <div class="input-group">
+                    <select class="form-control" formControlName="product_id"
+                        (change)="onChangeServer($event)">
+                        <option value="" style="font-weight: bold;">Select a Product</option>
+                        <option style="font-weight: bold;" *ngFor="let emp of productIds; let i = index" [value]="i">
+                            {{emp[1]}} - {{emp[2]}} | Expires at: {{emp[3]}}</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="number" formControlName="qty" style="width: 100px;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="submit" (click)="addSale()" class="btn btn-info"
+                        style="float:right; width:130px; height:35px;"><i class="fa fa-plus-circle"
+                            aria-hidden="true"></i> Add</button>
+                </div>
+
+            </form>
+            
+        </div>
+    </div>
+
+
+
+    <!-- table for value -->
+    <table class="table table-bordered" id="resultTable" data-responsive="table">
+        <thead>
+            <tr>
+                <th class="d-none"> ID </th>
+                <th> Food Code </th>
+                <th> Food Name </th>
+                <th> Unit Price </th>
+                <!--th> Vat %</th-->
+                <th> Qty </th>
+                <th> Amount </th>
+
+                <th> Action </th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            <tr *ngFor="let row of productInfo; let i = index">
+                <th class="d-none">{{row[0]}}</th>
+                <th>{{row[1]}}</th>
+                <th>{{row[2]}}</th>
+                <th>{{row[3]}}</th>
+                <th>{{row[4]}}</th>
+                <th>{{row[5]}}</th>
+                <th>
+                    <button (click)="removeItem(i)" class="btn btn-warning">Cancel</button>
+                </th>
+            </tr>
+            <tr>
+                <td class="d-none"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th> Total Amount: </th>
+            </tr>
+            <tr>
+                <th colspan="5"><strong style="font-size: 12px; font-weight: bold; color: #222222;">Total with Vat:</strong></th>
+                <td colspan="1"><span style="font-size: 12px; font-weight: bold; color: #222222;" id="result1">
+                        {{this.total}} </span></td>
+                <!--td colspan="1"><strong style="font-size: 12px; color: #222222;">
+
+0.00		
+    </td-->
+                <th></th>
+            </tr>
+
+            <!--for vat-->
+            <tr>
+                <th colspan="5"><strong style="font-size: 12px; color: #222222;">Vat:</strong></th>
+                <td colspan="1"><strong style="font-size: 12px; color: #222222;">
+                        <input type="checkbox" name="checkbox" id="checkbox" value="1">
+                        <span id="show_vat" style="display: none">
+                            <input id="result2" value="" type="number">
+                            <button class="btn btn-big btn-info" style="float: right;">Vat</button>
+                        </span></strong>
+
+                </td>
+                <td colspan="1"><span style="font-size: 12px; color: #222222;" id="result3">
+
+
+                    </span></td>
+            </tr>
+            <!--for discount-->
+            <tr>
+                <th colspan="5"><strong style="font-size: 12px; color: #222222;">Discount:</strong></th>
+                <td colspan="1"><strong style="font-size: 12px; color: #222222;">
+                        <input type="checkbox" name="checkbox" id="checkbox" value="1" onclick="setDiscount()">
+                        <span id="show_discount" style="display: none">
+                            <input id="result4" value="" type="number"> <button class="btn btn-big btn-info"
+                                onclick="sum()" style="float: right;">Discount</button>
+                        </span></strong>
+
+                </td>
+                <td colspan="1"><span style="font-size: 12px; color: #222222;" id="result">
+
+                    </span></td>
+            </tr>
+            <!--for grand Total-->
+            <tr>
+                <th colspan="5"><strong style="font-size: 12px; color: #222222;">Grand Total:</strong></th>
+                <td colspan="1"><span style="font-size: 12px; color: #222222;">
+                        <p id="result5"></p>
+                    </span></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Save</button>
+
+  
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #ffffff; padding: 2px 16px;">
+          <h2 class="modal-title text-light" id="exampleModalLabel">Cash</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="formGroup">
+              <input formControlName="customer" type="text" placeholder="Enter Customer Name" class="form-control" style="width: 268px;
+              height: 40px;">
+              <input formControlName="cash" type="number" placeholder="Cash" class="form-control mt-2" style="width: 268px;
+              height: 40px;">
+              <button (click)="valueSave()" class="btn btn-large mt-3" style="background-color: #5bb75b; width: 247px; color: #fff;">
+                <i class="fa-regular fa-floppy-disk" style="margin-right: 5px;"></i> Save
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer" style="background-color: #ffffff;">
+            <h5 class="text-light" style="margin-right: 40%;">Food World</h5>
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>

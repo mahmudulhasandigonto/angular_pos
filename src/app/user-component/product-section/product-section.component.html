@@ -1,0 +1,68 @@
+<div class="contentheader mt-2 ml-4 mr-4">
+  <h3 class="text-center"><i class="fa fa-th" aria-hidden="true" style="margin-right: 5px;"></i> Foods Item</h3>
+</div>
+<!-- <ul class="breadcrumb ml-4 mr-4">
+  <li><a href="#">Dashboard </a></li> /
+  <li class="active"> Foods</li>
+</ul> -->
+
+<div style="margin-top: -19px; margin-bottom: 21px; margin-left: 20px; margin-right: 20px;">
+  <!-- <a routerLink="../" href="#"><button class="btn btn-secondary btn-large" style="float: left;"><i class="fa fa-arrow-circle-left"
+        aria-hidden="true"></i> Back</button></a> -->
+
+
+
+  <div style="text-align:center;">
+    Total Number of Foods: <font color="green" style="font:bold 22px 'Aleo';">[{{this.allProduct}}]</font>
+  </div>
+
+  <div style="text-align:center;">
+    <font style="color:rgb(255, 95, 66);; font:bold 22px 'Aleo';">[{{this.bellowProduct}}]</font> Foods are below QTY of {{this.allProduct}}
+  </div>
+</div>
+<!-- table value start -->
+<div class="card" style="margin-top: 4.5rem!important;">
+
+  <table class="table table-bordered table-striped table-responsive mt-2 ml-3 bg-white">
+    <thead class="text-center">
+      <tr>
+        <th scope="col">Food Code</th>
+        <th scope="col">Food Name</th>
+        <th scope="col">Supplier</th>
+
+        <th scope="col">Date Received</th>
+        <th scope="col">Expiry Date</th>
+        <th scope="col">Original Price</th>
+        <th scope="col">Selling Price</th>
+        <th scope="col">Qty</th>
+        <th scope="col">Qty Left</th>
+        <th scope="col">Total</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <tr *ngFor="let item of productInfo; let i = index">
+        <td>{{item.productId}}</td>
+        <td>{{item.productName}}</td>
+        <td>{{item.suppliers.supplierName}}</td>
+        <td>{{item.manufactureDate}}</td>
+        <td>{{item.expireDate}}</td>
+        <td>{{item.originalPrice}}</td>
+        <td>{{item.salePrice}}</td>
+        <td>{{item.quantity}}</td>
+        <td>6</td>
+        <td>720</td>
+        <td style="cursor: pointer;">
+          <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="btn btn-danger" style="margin-left: 5px;"><i class="fa-solid fa-trash"></i></button>
+        </td>
+        <!-- <td> {{item.paymentType}} </td>
+              <td>
+                  <a >Generate Payslip</a>
+              </td> -->
+      </tr>
+
+    </tbody>
+  </table>
+</div>
